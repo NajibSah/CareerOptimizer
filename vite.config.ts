@@ -4,11 +4,13 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   define: {
-    // This shims process.env for the browser using the build-time environment variable
-    'process.env.API_KEY': JSON.stringify(process.env.API_KEY)
+    // This injects the environment variables during the build phase
+    'process.env.API_KEY': JSON.stringify(process.env.API_KEY),
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
   },
   build: {
     outDir: 'dist',
-    sourcemap: true
+    emptyOutDir: true,
+    sourcemap: false
   }
 });
