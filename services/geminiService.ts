@@ -1,16 +1,8 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { AppMode, GeneratorResponse, CheckerResponse } from "../types";
 
-const getApiKey = () => {
-  const key = process.env.API_KEY;
-  if (!key || key === 'undefined') {
-    console.warn("API_KEY is not defined. Please check your environment variables.");
-    return '';
-  }
-  return key;
-};
-
-const ai = new GoogleGenAI({ apiKey: getApiKey() });
+// process.env.API_KEY is replaced by Vite during build time
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
 
 const GENERATOR_SCHEMA = {
   type: Type.OBJECT,
