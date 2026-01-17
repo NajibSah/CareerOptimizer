@@ -1,7 +1,7 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { AppMode, GeneratorResponse, CheckerResponse } from "../types";
 
-// process.env.API_KEY is replaced by Vite during build time
+// The string 'process.env.API_KEY' is replaced by Vite at build time
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
 
 const GENERATOR_SCHEMA = {
