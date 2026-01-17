@@ -1,7 +1,7 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { AppMode, GeneratorResponse, CheckerResponse } from "../types";
 
-// The string 'process.env.API_KEY' is replaced by Vite at build time
+// The string 'process.env.API_KEY' is replaced/shimmed by Vite at build time
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
 
 const GENERATOR_SCHEMA = {
@@ -86,6 +86,7 @@ export const generateCV = async (careerDetails: string, targetJob: string): Prom
     }
   });
 
+  if (!response.text) throw new Error("No response from AI");
   return JSON.parse(response.text);
 };
 
@@ -117,5 +118,6 @@ export const checkCV = async (
     }
   });
 
+  if (!response.text) throw new Error("No response from AI");
   return JSON.parse(response.text);
 };

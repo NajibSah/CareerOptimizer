@@ -4,14 +4,18 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   define: {
-    // This shims process.env.API_KEY so it's available in the browser code
-    // It replaces the literal text 'process.env.API_KEY' with the actual string from your environment
+    // This creates a global 'process' object in the browser so that
+    // code calling process.env.API_KEY doesn't crash.
+    'process.env': {
+      API_KEY: JSON.stringify(process.env.API_KEY || ''),
+      NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'production'),
+    },
+    // Also shim individual values for maximum compatibility
     'process.env.API_KEY': JSON.stringify(process.env.API_KEY || ''),
-    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
   },
   build: {
     outDir: 'dist',
     emptyOutDir: true,
-    sourcemap: false
+    sourcemap: false,
   }
 });
